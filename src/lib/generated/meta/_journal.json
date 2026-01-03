@@ -22,6 +22,13 @@
       "when": 1767467460112,
       "tag": "0002_nostalgic_korath",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1767470808229,
+      "tag": "0003_equal_vengeance",
+      "breakpoints": true
     }
   ]
 }

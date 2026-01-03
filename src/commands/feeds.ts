@@ -1,6 +1,6 @@
 import { readConfig } from "src/config";
 import { getUser } from "src/lib/db/queries/users";
-import { getAllFeeds, getFeedFollowsForUser } from "src/lib/feed";
+import { getAllFeeds, getFeedFollowsForUser } from "src/lib/db/queries/feed";
 
 export async function handlerFeeds(cmdName: string) {
   const result = await getAllFeeds();

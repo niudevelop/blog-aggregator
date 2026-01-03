@@ -1,8 +1,8 @@
 import { XMLParser } from "fast-xml-parser";
-import { feed_follows, feeds, users } from "./db/schema";
-import { db } from "./db";
-import { eq, and } from "drizzle-orm";
-import type { User } from "./db/queries/users";
+import { feed_follows, feeds, users } from "../schema";
+import { db } from "..";
+import { eq, and, sql } from "drizzle-orm";
+import type { User } from "./users";
 
 export type Feed = typeof feeds.$inferSelect;
 
@@ -126,5 +126,29 @@ export async function getFeedFollowsForUser(userId: string) {
 
 export async function deleteFeedFollow(feedId: string, userId: string) {
   const [result] = await db.delete(feed_follows).where(and(eq(feed_follows.feedId, feedId), eq(feed_follows.userId, userId)));
+  return result;
+}
+
+export async function markFeedFetched(feedId: string) {
+  const now = new Date();
+  const [result] = await db
+    .update(feeds)
+    .set({
+      last_fetched_at: now,
+      updatedAt: now,
+    })
+    .where(eq(feeds.id, feedId))
+    .returning();
+
+  return result;
+}
+
+export async function getNextFeedToFetch() {
+  const [result] = await db
+    .select()
+    .from(feeds)
+    .orderBy(sql`${feeds.last_fetched_at} asc nulls first`)
+    .limit(1);
+
   return result;
 }

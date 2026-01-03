@@ -9,6 +9,7 @@ import { handlerFeeds } from "./commands/feeds";
 import { handlerFollow, handlerFollowing } from "./commands/follow";
 import { middlewareLoggedIn } from "./middleware/middleware";
 import { handlerUnfollow } from "./commands/unfollow";
+import { handlerBrowse } from "./commands/browser";
 
 async function main() {
   const registry: CommandsRegistry = {};
@@ -23,6 +24,7 @@ async function main() {
   registerCommand(registry, "feeds", handlerFeeds);
   registerCommand(registry, "follow", handlerFollow);
   registerCommand(registry, "following", handlerFollowing);
+  registerCommand(registry, "browse", middlewareLoggedIn(handlerBrowse));
   const argv = process.argv.slice(2);
   let argNeeded = 1;
   let cmdName = "";
@@ -30,7 +32,7 @@ async function main() {
   if (argv.length > 0) {
     cmdName = argv[0];
     args = argv.slice(1);
-    if (cmdName === "reset" || cmdName === "users" || cmdName === "agg" || cmdName === "feeds" || cmdName === "following") {
+    if (cmdName === "reset" || cmdName === "users" || cmdName === "feeds" || cmdName === "following") {
       argNeeded = 0;
     }
     if (cmdName === "addfeed") {

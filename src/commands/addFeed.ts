@@ -1,6 +1,6 @@
 import { readConfig } from "src/config";
 import { getUser, type User } from "src/lib/db/queries/users";
-import { createFeed, createFeedFollow } from "src/lib/feed";
+import { createFeed, createFeedFollow } from "src/lib/db/queries/feed";
 
 export async function handlerAddFeed(cmdName: string, user: User, ...args: string[]) {
   if (args.length !== 2) {

@@ -1,5 +1,5 @@
 import type { User } from "src/lib/db/queries/users";
-import { deleteFeedFollow, getFeed } from "src/lib/feed";
+import { deleteFeedFollow, getFeed } from "src/lib/db/queries/feed";
 
 export async function handlerUnfollow(cmdName: string, user: User, ...args: string[]) {
   if (args.length !== 1) {
