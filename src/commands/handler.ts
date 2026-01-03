@@ -1,8 +1,11 @@
-import { setUser } from "./config.js";
+import type { User } from "src/lib/db/queries/users.js";
+import { setUser } from "../config.js";
 
 export type CommandHandler = (cmdName: string, ...args: string[]) => Promise<void>;
 export type CommandsRegistry = Record<string, CommandHandler>;
 
+export type UserCommandHandler = (cmdName: string, user: User, ...args: string[]) => Promise<void>;
+export type middlewareLoggedIn = (handler: UserCommandHandler) => CommandHandler;
 
 export function registerCommand(registry: CommandsRegistry, cmdName: string, handler: CommandHandler) {
   registry[cmdName] = handler;

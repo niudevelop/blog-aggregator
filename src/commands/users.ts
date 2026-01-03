@@ -1,5 +1,5 @@
-import { readConfig, setUser } from "./config";
-import { deleteAllUsers, getUsers } from "./lib/db/queries/users";
+import { readConfig, setUser } from "../config";
+import { deleteAllUsers, getUsers } from "../lib/db/queries/users";
 
 export async function handlerUsers(cmdName: string, ...args: string[]) {
   const users = await getUsers();
